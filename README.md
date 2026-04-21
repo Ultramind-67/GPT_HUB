@@ -1,7 +1,3 @@
-Вот профессионально оформленный файл `README.md` для вашего проекта. Я добавил структуру, акценты на ключевых технологиях и визуальное разделение блоков, чтобы проект выглядел как продукт уровня Enterprise.
-
----
-
 # 🧠 MTS AI Smart Workspace
 ### Next-Gen Intelligent Corporate Hub | **Team UltraMind**
 
@@ -72,13 +68,3 @@ docker-compose up -d
 *   **Backend**: Python 3.11, OpenWebUI Pipelines.
 *   **Search Engine**: SearXNG (Self-hosted).
 *   **Data Layer**: SQLite (метаданные), Local FS (Persistent Storage).
-
----
-
-## 👤 Контакты
-**Кухтин Алексей Игоревич** — *Lead Developer & AI Architect*  
-**Команда**: UltraMind  
-
-> **MTS AI Smart Workspace**: Эффективность. Безопасность. Интеллект.
-
----

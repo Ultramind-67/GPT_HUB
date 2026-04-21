@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "8000:8080"
+    environment:
+      - WEBUI_NAME=MTS AI Workspace
+      - WEBUI_LOGO_URL=https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/MTS_Logo_2023.svg/1200px-MTS_Logo_2023.svg.png
+      - OPENAI_API_BASE_URL=https://api.gpt.mws.ru/v1
+      - OPENAI_API_KEY= ключ
+      - ENABLE_OLLAMA_API=False
+      - PIPELINE_API_URL=http://pipelines:9099
+      - ANONYMOUS_TELEMETRY=False
+      - DO_NOT_TRACK=True
+      - ENABLE_RAG_WEB_SEARCH=True
+      - RAG_WEB_SEARCH_ENGINE=searxng
+      - SEARXNG_SEARCH_URL=http://searxng:8080/search?q=<query>
+    volumes:
+      - open-webui-data:/app/backend/data
+      - ./output:/app/backend/data/output  
+    restart: unless-stopped
+    depends_on:
+      - pipelines
+      - searxng
+
+  pipelines:
+    image: ghcr.io/open-webui/pipelines:main
+    container_name: pipelines
+    ports:
+      - "9099:9099"
+    environment:
+      - PIPELINES_REQUIREMENTS=python-pptx beautifulsoup4 requests
+    volumes:
+      - ./webui.db:/app/backend/data/webui.db
+      - ./output:/app/backend/data/output
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    ports:
+      - "8081:8080"
+    environment:
+      - BASE_URL=http://localhost:8081/
+    volumes:
+      - searxng-data:/etc/searxng
+    restart: unless-stopped
+
+volumes:
+  open-webui-data:
+  searxng-data:
